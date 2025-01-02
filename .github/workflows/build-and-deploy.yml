@@ -38,8 +38,8 @@ jobs:
           TAG=${GITHUB_SHA::7}
           docker build -t mompansy/home-ordering:$TAG -f docker/app.dockerfile .
           docker tag mompansy/home-ordering:$TAG mompansy/home-ordering-node:latest
-          docker push mompansy/home-ordering:$TAG
-          docker push mompansy/home-ordering:latest
+          docker push mompansy/home-ordering-node:$TAG
+          docker push mompansy/home-ordering-node:latest
 
       # Step 5: Commit and Push Changes
       - name: Commit and Push Changes
