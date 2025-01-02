@@ -25,7 +25,7 @@ jobs:
       - name: Check for Changes in client or server
         id: changes_check
         run: |
-          if git diff --quiet HEAD^ HEAD -- src server; then
+          if git diff --quiet HEAD^ HEAD -- src server package.json; then
             echo "no_changes=true" >> $GITHUB_ENV
           else
             echo "no_changes=false" >> $GITHUB_ENV
