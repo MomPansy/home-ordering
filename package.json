@@ -1,0 +1,43 @@
+{
+  "name": "home-ordering",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev:server": "pnpm tsx watch --tsconfig tsconfig.node.json server/index.ts",
+    "dev:app": "wait-on http://0.0.0.0:3000/healthz && vite",
+    "dev": "pnpm run --stream /dev:.*/",
+    "build:typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json",
+    "build:server": "tsx --tsconfig tsconfig.node.json scripts/build-server.ts",
+    "build:app": "vite build",
+    "build": "pnpm run build:typecheck && rm -rf dist && pnpm run build:server && pnpm run build:app",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@hono/node-server": "^1.13.0",
+    "@hono/zod-validator": "^0.2.2",
+    "hono": "^4.6.2",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/node": "^22.5.5",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "esbuild": "^0.23.1",
+    "eslint": "^9.17.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "globals": "^15.14.0",
+    "typescript": "~5.6.2",
+    "typescript-eslint": "^8.18.2",
+    "vite": "^6.0.5",
+    "tsx": "^4.19.1",
+    "wait-on": "^8.0.1"
+  }
+}
