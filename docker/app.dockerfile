@@ -18,7 +18,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 hono
 COPY --from=prod-deps --chown=hono:nodejs /app/node_modules /app/node_modules
 COPY --from=build --chown=hono:nodejs /app/dist /app/dist
-COPY --chown=hono:nodejs .env package.json /app/
+COPY --chown=hono:nodejs package.json /app/
 USER hono
 EXPOSE 3000
 ENV NODE_ENV=production
