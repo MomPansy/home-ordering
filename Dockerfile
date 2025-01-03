@@ -1,9 +1,10 @@
 FROM node:20-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable pnpm
+RUN corepack enable
+RUN corepack prepare pnpm@9.1.1 --activate
 COPY . /app
-WORKDIR /app
+WORKDIR /app 
 
 FROM base AS prod-deps
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile

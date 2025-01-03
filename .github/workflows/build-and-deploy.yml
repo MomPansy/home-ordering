@@ -25,7 +25,7 @@ jobs:
       - name: Check for Changes in client or server
         id: changes_check
         run: |
-          if git diff --quiet HEAD^ HEAD -- src server package.json nixpacks.toml; then
+          if git diff --quiet HEAD^ HEAD -- src server package.json nixpacks.toml Dockerfile; then
             echo "no_changes=true" >> $GITHUB_ENV
           else
             echo "no_changes=false" >> $GITHUB_ENV
@@ -36,7 +36,7 @@ jobs:
         if: env.no_changes == 'false'
         run: |
           TAG=${GITHUB_SHA::7}
-          docker build -t mompansy/home-ordering-node:$TAG -f docker/app.dockerfile .
+          docker build -t mompansy/home-ordering-node:$TAG .
           docker tag mompansy/home-ordering-node:$TAG mompansy/home-ordering-node:latest
           docker push mompansy/home-ordering-node:$TAG
           docker push mompansy/home-ordering-node:latest
