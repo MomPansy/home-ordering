@@ -1,4 +1,5 @@
 import { MenuItem } from './menu-item'
+import { SkeletonCard } from './ui/skeleton'
 import { useGetMeat } from '@/hooks/use-get-meat'
 import { useGetVegetable } from '@/hooks/use-get-vegetable'
 import { useGetEgg } from '@/hooks/use-get-egg'
@@ -75,8 +76,14 @@ export function MainMenu() {
 
     return (
         <div>
-            {isLoading && <div>Loading...</div>}
             <h1 className="text-xl font-bold px-2" id='meat'>Meat</h1>
+            {isLoading && <div className="grid grid-cols-2 md:grid-cols-4 p-2 gap-4">
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+            </div>}
             <div className="grid grid-cols-2 md:grid-cols-4 p-2 gap-4">
                 {meatData?.map((item) => (
                     <MenuItem
@@ -89,6 +96,14 @@ export function MainMenu() {
                 ))}
             </div>
             <h1 className="text-xl font-bold px-2" id='vegetable'>Vegetable</h1>
+            {isLoading && <div className="grid grid-cols-2 md:grid-cols-4 p-2 gap-4">
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+            </div>}
+
             <div className="grid grid-cols-2 md:grid-cols-4 p-2 gap-4">
                 {vegetableData?.map((item) => (
                     <MenuItem
@@ -101,6 +116,14 @@ export function MainMenu() {
                 ))}
             </div>
             <h1 className="text-xl font-bold px-2" id='egg'>Egg</h1>
+            {isLoading && <div className="grid grid-cols-2 md:grid-cols-4 p-2 gap-4">
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+                <SkeletonCard />
+            </div>}
+
             <div className="grid grid-cols-2 md:grid-cols-4 p-2 gap-4">
                 {eggData?.map((item) => (
                     <MenuItem

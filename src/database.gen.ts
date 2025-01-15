@@ -46,16 +46,19 @@ export type Database = {
           created_at: string
           id: number
           quantity: number | null
+          status: Database["public"]["Enums"]["order_status"] | null
         }
         Insert: {
           created_at?: string
           id?: number
           quantity?: number | null
+          status?: Database["public"]["Enums"]["order_status"] | null
         }
         Update: {
           created_at?: string
           id?: number
           quantity?: number | null
+          status?: Database["public"]["Enums"]["order_status"] | null
         }
         Relationships: []
       }
@@ -67,7 +70,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      order_status: "Confirmed" | "Pending"
     }
     CompositeTypes: {
       [_ in never]: never
