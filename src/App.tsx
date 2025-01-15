@@ -1,19 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import { Button } from "@/components/ui/button"
+
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
+import { MainMenu } from "./components/main-menu"
+import { Toaster } from "@/components/ui/toaster"
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main>
-        <SidebarTrigger />
-      </main>
+      <Toaster />
+      <SidebarTrigger className="fixed" />
+      <div className='pl-6'>
+        <MainMenu />
+      </div>
     </SidebarProvider>
   )
 }

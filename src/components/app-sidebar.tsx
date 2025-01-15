@@ -15,24 +15,24 @@ import {
 const items = [
   {
     title: "Meat",
-    url: "#",
-    icon: Drumstick,
+    url: "#meat",
+    icon: <Drumstick size={24} />,
   },
   {
     title: "Vegetable",
-    url: "#",
-    icon: LeafyGreen,
+    url: "#vegetable",
+    icon: <LeafyGreen size={24} />,
   },
   {
     title: "Egg",
-    url: "#",
-    icon: Egg,
+    url: "#egg",
+    icon: < Egg size={24} />,
   }
 ]
 
 export function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon" >
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className='m-auto text-2xl h-20 text-black'>66 Ordering</SidebarGroupLabel>
@@ -40,9 +40,9 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild size='lg'>
-                    <a href={item.url}>
-                      <item.icon className='h-24 w-24'/>
+                  <SidebarMenuButton tooltip={item.title} size='lg'>
+                    <a href={item.url} className="flex gap-2 items-center justify-center">
+                      {item.icon}
                       <span className='text-xl'>{item.title}</span>
                     </a>
                   </SidebarMenuButton>
@@ -52,6 +52,6 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-    </Sidebar>
+    </Sidebar >
   )
 }
