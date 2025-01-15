@@ -5,6 +5,7 @@ RUN corepack enable && \
     corepack prepare pnpm@9.1.1 --activate
 WORKDIR /app
 COPY . .
+COPY .env .env
 RUN chown -R node:node /app
 USER node
 

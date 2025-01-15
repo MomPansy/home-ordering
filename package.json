@@ -16,7 +16,7 @@
     "preview": "vite preview",
     "start": "pnpm dotenvx run -f .env -- node dist/index.js",
     "typegen": "pnpm supabase gen types typescript --project-id mjqigblexugzxswytqat -s public,storage> src/database.gen.ts",
-    "build:docker": " docker build --no-cache -t home-ordering -f docker/app.dockerfile ."
+    "build:docker": " docker build --no-cache -t home-ordering ."
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.33.0",
