@@ -14,7 +14,7 @@
     "build": "pnpm run build:typecheck && rm -rf dist && pnpm run build:server && pnpm run build:app",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "pnpm dotenvx run -- node dist/index.js",
+    "start": "pnpm dotenvx run -f .env -- node dist/index.js",
     "typegen": "pnpm supabase gen types typescript --project-id mjqigblexugzxswytqat -s public,storage> src/database.gen.ts",
     "build:docker": " docker build --no-cache -t home-ordering -f docker/app.dockerfile ."
   },
