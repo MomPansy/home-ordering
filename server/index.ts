@@ -12,7 +12,6 @@ export const apiRoutes = app
 
 export type ApiRoutes = typeof apiRoutes;
 
-
 app.get('/healthz', (c) => {
   return c.json({ message: 'Ok' });
 });
