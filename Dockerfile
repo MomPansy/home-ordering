@@ -25,6 +25,7 @@ RUN corepack enable && \
 WORKDIR /app
 COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
+COPY .env.production .env.production
 COPY package.json ./
 USER node
 EXPOSE 3000
