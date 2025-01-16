@@ -29,11 +29,32 @@ export function Order() {
             queryClient.invalidateQueries({
                 queryKey: ['order', orderId],
             })
+            queryClient.invalidateQueries({
+                queryKey: ['orderConfirmed', orderId],
+            })
             toast({
                 title: `Order ${orderId} confirmed!`,
             })
         }
     })
+
+    const { data: orderConfirmed, isLoading: isOrderConfirmedLoading } = useQuery({
+        queryKey: ['orderConfirmed', orderId],
+        queryFn: async () => {
+            const { data, error } = await supabase
+                .from('orders')
+                .select('status')
+                .eq('id', parseInt(orderId))
+                .single();
+
+            if (error) {
+                console.error(error.message);
+                throw error;
+            }
+
+            return data;
+        },
+    });
 
     const { data, isLoading } = useQuery({
         queryKey: ['order', orderId],
@@ -94,14 +115,23 @@ export function Order() {
     return (
         <div className="flex flex-col h-screen">
             <div className="flex flex-col flex-1 overflow-y-auto">
-                <h1 className="text-xl font-medium p-2">
-                    Order {orderId} Confirmation:{" "}
-                    {data?.[0].created_at &&
-                        new Date(data[0].created_at).toLocaleDateString("en-GB", {
-                            timeZone: "Asia/Singapore", // GMT+8
-                        })}
-                </h1>
-                {isLoading && (
+                <div className="p-4 border-b">
+                    <h1 className="text-2xl font-bold text-gray-800">
+                        Order #{orderId} Confirmation
+                    </h1>
+                    {data?.[0]?.created_at && (
+                        <p className="text-sm text-gray-500 mt-1">
+                            Placed on{" "}
+                            {new Date(data[0].created_at).toLocaleDateString("en-GB", {
+                                timeZone: "Asia/Singapore",
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric",
+                            })}
+                        </p>
+                    )}
+                </div>
+                {isLoading || isOrderConfirmedLoading ? (
                     <div className="grid grid-cols-2 md:grid-cols-4 p-2 gap-4">
                         <SkeletonCard />
                         <SkeletonCard />
@@ -109,19 +139,26 @@ export function Order() {
                         <SkeletonCard />
                         <SkeletonCard />
                     </div>
-                )}
-
-                <div className="grid grid-cols-2 md:grid-cols-4 p-2 gap-4">
-                    {data?.map((item) => (
-                        <MenuItem key={item.name} name={item.name ?? '-'} url={item.signedUrl} quantity={item.quantity} />
-                    ))}
-                </div>
+                ) : (
+                    <div className="grid grid-cols-2 md:grid-cols-4 p-2 gap-4">
+                        {data && data.map((item) => (
+                            <MenuItem key={item.name} name={item.name ?? '-'} url={item.signedUrl} quantity={item.quantity} />
+                        ))}
+                    </div>
+                )
+                }
             </div>
-
-            <div className="p-4 border-t">
-                <Button className="w-full py-2 rounded" onClick={() => confirmOrder()}>Confirm Order</Button>
-            </div>
+            {
+                orderConfirmed?.status === 'Pending' ? (
+                    <div className="p-4 border-t">
+                        <Button className="w-full py-2 rounded" onClick={() => confirmOrder()} disabled={isLoading || isOrderConfirmedLoading}>Confirm Order</Button>
+                    </div>
+                ) : (
+                    <div className="p-4 border-t">
+                        <Button className="w-full py-2 rounded bg-green-500" disabled>Order Confirmed</Button>
+                    </div>
+                )
+            }
         </div>
     );
-
 }

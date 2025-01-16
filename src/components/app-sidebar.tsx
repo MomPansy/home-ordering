@@ -1,4 +1,4 @@
-import { Drumstick, LeafyGreen, Egg } from "lucide-react"
+import { Menu, Drumstick } from "lucide-react"
 
 import {
   Sidebar,
@@ -14,19 +14,14 @@ import {
 // Menu items.
 const items = [
   {
-    title: "Meat",
-    url: "#meat",
+    title: "Main Menu",
+    url: "/",
+    icon: <Menu size={24} />,
+  },
+  {
+    title: "Orders",
+    url: "/orders",
     icon: <Drumstick size={24} />,
-  },
-  {
-    title: "Vegetable",
-    url: "#vegetable",
-    icon: <LeafyGreen size={24} />,
-  },
-  {
-    title: "Egg",
-    url: "#egg",
-    icon: < Egg size={24} />,
   }
 ]
 

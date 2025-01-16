@@ -39,6 +39,13 @@ export type Database = {
             referencedRelation: "orders"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders_view"
+            referencedColumns: ["order_id"]
+          },
         ]
       }
       orders: {
@@ -64,7 +71,18 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      orders_view: {
+        Row: {
+          bucket_id: string | null
+          created_at: string | null
+          name: string | null
+          order_id: number | null
+          order_item_id: number | null
+          quantity: number | null
+          status: Database["public"]["Enums"]["order_status"] | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
