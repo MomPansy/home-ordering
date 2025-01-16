@@ -3,6 +3,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils";
 interface Props {
     id?: string;
     name: string;
@@ -10,11 +11,12 @@ interface Props {
     url: string;
     onClick?: () => void;
     quantity?: number | null;
+    className?: string
 }
 
-export function MenuItem({ name, url, onClick, quantity }: Props) {
+export function MenuItem({ name, url, onClick, quantity, className }: Props) {
     return (
-        <Card className="relative flex flex-col justify-center items-center p-2" onClick={onClick}>
+        <Card className={cn("relative flex flex-col justify-center items-center p-2", className)} onClick={onClick}>
             {/* Quantity Badge */}
             {quantity && (
                 <div className="absolute top-1 right-1">
