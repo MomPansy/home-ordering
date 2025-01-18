@@ -8,20 +8,31 @@ export const route = factory.createApp().post(
     zValidator(
         'json',
         z.object({
-            message: z.string(),
-            recipient: z.string(),
-            preview_url: z.string().optional()
+            order: z.string(),
+            url_endpoint: z.string()
         })
     ),
     async (c) => {
-        const { WA_PHONE_NUMBER_ID, CLOUD_API_ACCESS_TOKEN } = c.var
-        const { message, recipient, preview_url } = c.req.valid('json')
-        const response = await sendMessage({
-            WA_PHONE_NUMBER_ID,
-            RECIPIENT_PHONE_NUMBER: recipient,
-            ACCESS_TOKEN: CLOUD_API_ACCESS_TOKEN,
-            body: message,
-            preview_url
-        })
+        const { WA_PHONE_NUMBER_ID, WA_ACCESS_TOKEN, NANDA_PHONE_NUMBER } = c.var
+        const { order, url_endpoint } = c.req.valid('json')
+
+        try {
+            const response = await sendMessage({
+                WA_PHONE_NUMBER_ID,
+                ACCESS_TOKEN: WA_ACCESS_TOKEN,
+                order: order,
+                url_endpoint: url_endpoint,
+                recipient: NANDA_PHONE_NUMBER
+            });
+
+            return c.json(response);
+        } catch (error) {
+            console.error("Error sending message:", error);
+
+            return c.json(
+                { error: "Failed to send message" },
+                500
+            );
+        }
     }
 )

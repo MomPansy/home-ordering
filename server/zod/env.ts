@@ -6,6 +6,7 @@ export const appEnvVariablesSchema = z.object({
     CLOUD_API_ACCESS_TOKEN: z.string(),
     WA_PHONE_NUMBER_ID: z.string(),
     WA_ACCESS_TOKEN: z.string(),
+    NANDA_PHONE_NUMBER: z.string()
 })
 
 export type AppEnvVariables = z.infer<typeof appEnvVariablesSchema>;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { MenuItem } from './menu-item'
 import { SkeletonCard } from './ui/skeleton'
 import { useGetMeat } from '@/hooks/use-get-meat'
@@ -10,6 +11,7 @@ import { Button } from './ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import supabase from '@/lib/supabase'
 import { useToast } from '@/hooks/use-toast'
+import { api } from '@/lib/api'
 
 export function MainMenu() {
     const { data: meatData, isLoading } = useGetMeat()
@@ -48,6 +50,21 @@ export function MainMenu() {
 
             if (order_item_error) {
                 throw order_item_error
+            }
+
+            const order_text = Object.entries(order)
+                .map(([_, { quantity, name }]) => `• ${quantity} x ${name}`)
+                .join('  ');  // Double spaces as a soft separator
+
+            const res = await api.whatsapp.sendMessage.$post({
+                'json': {
+                    order: order_text,
+                    url_endpoint: 'order/' + order_data?.id
+                }
+            })
+
+            if (!res.ok) {
+                throw new Error('Failed to send message');
             }
         },
         onSuccess: () => {
