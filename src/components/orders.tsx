@@ -150,7 +150,7 @@ export function Orders() {
     }
 
     return (
-        <div className="p-2">
+        <div className="p-2 ">
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>
