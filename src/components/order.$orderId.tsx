@@ -142,7 +142,7 @@ export function Order() {
                 ) : (
                     <div className="grid grid-cols-2 md:grid-cols-4 p-2 gap-4">
                         {data && data.map((item) => (
-                            <MenuItem key={item.name} name={item.name ?? '-'} url={item.signedUrl} quantity={item.quantity} />
+                            <MenuItem key={item.name} name={item.name ?? '-'} url={item.signedUrl} quantity={item.quantity} withDialog/>
                         ))}
                     </div>
                 )
