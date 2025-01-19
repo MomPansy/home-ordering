@@ -3,6 +3,7 @@ import { MenuItem } from './menu-item'
 import { SkeletonCard } from './ui/skeleton'
 import { useGetMeat } from '@/hooks/use-get-meat'
 import { useGetVegetable } from '@/hooks/use-get-vegetable'
+import { useGetSeafood } from '@/hooks/use-get-seafood'
 import { useGetEgg } from '@/hooks/use-get-egg'
 import { useState } from 'react'
 import { OrderSummary } from './order-summary'
@@ -17,6 +18,7 @@ export function MainMenu() {
     const { data: meatData, isLoading } = useGetMeat()
     const { data: vegetableData } = useGetVegetable()
     const { data: eggData } = useGetEgg()
+    const { data: seafoodData } = useGetSeafood()
     const queryClient = useQueryClient()
     const { toast } = useToast()
 
@@ -191,6 +193,42 @@ export function MainMenu() {
                     )}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {eggData?.map((item) => (
+                            <MenuItem
+                                key={item.id!}
+                                id={item.id!}
+                                name={item.name ?? '-'}
+                                url={item.signedUrl}
+                                onClick={() => handleOrderClick(item.id!, item.name ?? '-')}
+                                className="
+                  bg-gray-50
+                  rounded-md
+                  p-2
+                  shadow-sm
+                  border border-gray-200
+                  hover:shadow-md
+                  transition-shadow
+                "
+                            />
+                        ))}
+                    </div>
+                </section>
+                {/* Seafood Section */}
+                <section className="bg-white mb-8 p-4 rounded-md shadow-sm">
+                    <h2 className="text-2xl font-semibold text-indigo-700 mb-1">Seafood</h2>
+                    <p className="text-sm text-gray-500 mb-4">
+                        Fresh seafood from the freezer.
+                    </p>
+                    {isLoading && (
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <SkeletonCard />
+                            <SkeletonCard />
+                            <SkeletonCard />
+                            <SkeletonCard />
+                            <SkeletonCard />
+                        </div>
+                    )}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {seafoodData?.map((item) => (
                             <MenuItem
                                 key={item.id!}
                                 id={item.id!}
