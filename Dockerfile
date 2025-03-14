@@ -1,8 +1,12 @@
 FROM node:20-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable && \
-    corepack prepare pnpm@9.1.1 --activate
+RUN echo "Before: corepack version => $(corepack --version || echo 'not installed')" && \
+    npm install -g @corepack@latest && \
+    echo "After: corepack version => $(corepack --version || echo 'not installed')" && \
+    corepack enable && \
+    corepack prepare pnpm@9.1.1 --activate && \ 
+    pnpm --version
 WORKDIR /app
 COPY . .
 COPY .env.production .env.production
@@ -20,8 +24,12 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 FROM node:20-slim
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable && \
-    corepack prepare pnpm@9.1.1 --activate
+RUN echo "Before: corepack version => $(corepack --version || echo 'not installed')" && \
+    npm install -g @corepack@latest && \
+    echo "After: corepack version => $(corepack --version || echo 'not installed')" && \
+    corepack enable && \
+    corepack prepare pnpm@9.1.1 --activate && \ 
+    pnpm --version
 WORKDIR /app
 COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
